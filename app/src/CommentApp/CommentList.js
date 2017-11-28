@@ -1,21 +1,36 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Comment from './Comment';
 
 class CommentList extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
     }
 
-    addComment (username, commentcontent, key) {
-        return <Comment username={username} commentcontent={commentcontent} key={key}></Comment>;
+    addComment(username, commentcontent, key) {
+        return <Comment
+            username={username}
+            commentcontent={commentcontent}
+            key={key}
+            index={key}
+            OnDeleteComment={this
+            .handleDeleteComment
+            .bind(this)}></Comment>;
     }
 
+    handleDeleteComment(index) {
+        this.props.handleDeleteComment && this
+            .props
+            .handleDeleteComment(index);
+    }
 
-    render () {
+    render() {
         return (
             <div>
                 <ul>
-                    {this.props.comments.map((comment, i) => this.addComment(comment.username, comment.commentcontent, i))}
+                    {this
+                        .props
+                        .comments
+                        .map((comment, i) => this.addComment(comment.username, comment.commentcontent, i))}
                 </ul>
             </div>
         );

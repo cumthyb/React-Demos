@@ -64,12 +64,12 @@ input {
 .comment {
     list-style: none;
     margin-bottom: 10px;
+    position: relative;
 }
 
 .comment:hover {
-    background-color: #b3ff19;
+    /* background-color: #b3ff19; */
 }
-
 
 .comment-user {
     font-weight: bold;
@@ -82,16 +82,36 @@ input {
 .comment .comment-content {
     word-break: break-all;
     padding-left: 10px;
-    user-select:none;
+    user-select: none;
 }
 
-.comment .comment-time{
-    text-align:right;
+.comment .comment-time {
+    text-align: right;
+    margin-bottom: 25px;
 }
 
+.comment .comment-btnDelt {
+    background-color: #e6e6e6;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    width: 60px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+}
+
+.comment .comment-btnDelt:hover {
+    background-color: #ffff80;
+    color: #00ff00;
+}
 
 .comment>hr {
     height: 1px;
     border: none;
-    border-top: 1px dashed #f1f1f1;
+    border-top: 1px solid #f1f1f1;
 }
