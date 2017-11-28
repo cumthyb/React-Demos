@@ -1,5 +1,5 @@
 body,
-pan,
+span,
 div,
 ul,
 li,
@@ -99,7 +99,7 @@ input {
     cursor: pointer;
     position: absolute;
     right: 0;
-    bottom: 0;
+    bottom: 5px;
     font-size: 14px;
     text-align: center;
     line-height: 20px;
