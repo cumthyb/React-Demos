@@ -9,13 +9,25 @@ let appState = {
     }
   }
   
-  function dispatch (action) {
+  function stateChanger (state, action) {
     switch (action.type) {
       case 'UPDATE_TITLE_TEXT':
-        appState.title.text = action.text
+      return {
+        ...state,
+        title:{
+          ...state.title,
+          text: action.text
+        }
+      }
         break
       case 'UPDATE_TITLE_COLOR':
-        appState.title.color = action.color
+      return { // 构建新的对象并且返回
+        ...state,
+        title: {
+          ...state.title,
+          color: action.color
+        }
+      }
         break
       default:
         break
@@ -39,7 +51,20 @@ let appState = {
     contentDOM.style.color = content.color
   }
   
+function createstore(state,stateChanger){
+  let linsters=[];
+  let subscribe=(linster)=>linsters.push(linster);
+  let getState=()=>state;
+  let dispatch=(action)=>{
+    stateChanger(state,action);
+    linsters.forEach((linster)=>linster())
+  };
+  return {getState,subscribe,dispatch};
+}
+
+  const store=createstore(appState,stateChanger);
+  store.subscribe(()=>renderApp(store.getState())); 
   renderApp(appState) // 首次渲染页面
-  dispatch({ type: 'UPDATE_TITLE_TEXT', text: '《React.js 小书》' }) // 修改标题文本
-  dispatch({ type: 'UPDATE_TITLE_COLOR', color: 'blue' }) // 修改标题颜色
-  renderApp(appState) // 把新的数据渲染到页面上
+  store.dispatch({ type: 'UPDATE_TITLE_TEXT', text: '《React.js 小书》' });
+  store.dispatch({ type: 'UPDATE_TITLE_COLOR', color: 'blue' });
+ 
