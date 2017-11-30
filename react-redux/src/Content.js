@@ -1,20 +1,39 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import SwitchBtn from "./ThemeSwitch"
+import ThemeSwitch from "./ThemeSwitch"
 export default class Content extends Component {
-    constructor(props) {
-        super(props);
+    static contextTypes = {
+        store: PropTypes.object
     }
 
-    render()
-    {
+    constructor() {
+        super()
+        this.state = {
+            themeColor: ''
+        }
+    }
+
+    componentWillMount () {
+        const { store } = this.context
+        this._updateThemeColor()
+        store.subscribe(() => this._updateThemeColor())
+      }
+
+    _updateThemeColor() {
+        const {store} = this.context
+        const state = store.getState()
+        this.setState({themeColor: state.themeColor})
+    }
+
+    render() {
         return (
             <div>
-                <p>React.js 小鼠内容</p>
-                <SwitchBtn/>
+                <p style={{
+                    color: this.state.themeColor
+                }}>React.js 小书内容</p>
+                <ThemeSwitch/>
             </div>
         )
-
     }
 
 }

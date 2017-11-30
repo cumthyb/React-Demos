@@ -6,53 +6,44 @@ import Content from './Content';
 import registerServiceWorker from './registerServiceWorker';
 import PropTypes from 'prop-types';
 
-
- function createStore(reducer) {
-    let state = null;
-    let listeners = [];
-    const subsribe = (lis) => listeners.push(lis);
-    const getState = () => state;
+function createStore(reducer) {
+    let state = null
+    const listeners = []
+    const subscribe = (listener) => listeners.push(listener)
+    const getState = () => state
     const dispatch = (action) => {
-        state = reducer(state, action);
-        listeners.forEach((listener) => listener());
+        state = reducer(state, action)
+        listeners.forEach((listener) => listener())
     }
-    return {getState,dispatch,subsribe}
-};
+    dispatch({}) // 初始化 state
+    return {getState, dispatch, subscribe}
+}
 
-
-function themeReducer(state, action) {
+const themeReducer = (state, action) => {
     if (!state) 
-        return {themeColor: "red"};
+        return {themeColor: 'red'}
     switch (action.type) {
-        case "CHANGE_COLOR":
-            state = {
+        case 'CHANGE_COLOR':
+            return {
                 ...state,
                 themeColor: action.themeColor
-            };
-            break;
+            }
         default:
-            return state;
+            return state
     }
 }
 
-const store=createStore(this.themeReducer);
-
+const store = createStore(themeReducer)
 
 class Index extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            themeColor: "red"
-        }
-    } 
-
     static childContextTypes = {
         store: PropTypes.object
     }
 
     getChildContext() {
-        return store;
+        return {store}
     }
+
     render() {
         return (
             <div>
